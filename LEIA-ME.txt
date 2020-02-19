@@ -1,0 +1,12 @@
+=========================== Como compilar ====================================
+Para compilar é preciso incluir os arquivos lib/ppm.c e lib/stacks.c. Também é possivel instruir o compilador para incluir ou não a parte do código que imprime na tela as imagens usando definindo "IMPRIME", mas essa configuração não é recomendada por padrão.
+
+Exemplo de compilação:
+gcc main.c lib/ppm.c lib/stacks.c -o Contador.exe -D IMPRIME
+
+
+=========================== Como usar =======================================
+Basta chamar o programa a partir do terminal com o nome do arquivo que se deseja contar logo em seguida.
+
+Exemplo:
+Contador img/08.ppm
