@@ -1,17 +1,22 @@
-/** Instruções para o compilador **/
+/*
+This program basically analyze pixels of an image in the format PPM and then it will return
+how many object are in the image. It's strongly linked to the test images, but that was the purpose.
+Uses a lot concepts like memory, file reading, queues and stacks.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
 #include "lib/stacks.h"
 #include "lib/ppm.h"
 
-/** Declaração de estruturas, funções, etc **/
+//Declaring functions and structures
 void macro(tBitmap area, long ***visitado, numStack Y, numStack X, long y, long x);
 
-/** Main **/
+//Main function
 int main(int argc, char *argv[])
 {
-	/* Inicialização */
+	//Initialization
 	long x,y, contagem, **explorado;
 	numStack pilha_x=newStack(), pilha_y=newStack();
 	tBitmap mapa;
@@ -33,20 +38,19 @@ int main(int argc, char *argv[])
 		for(x=0; x<mapa.largura; ++x)
 			explorado[y][x]=-1;
 	
-	/* Meio */
 	contagem=0;
 	explorado[0][0]=0;
 
 	do
 	{
-		/* 1. Seleciona o lugar certo pra começar e marca como explorado */
+		//Select the right place and mark it as explored
 		for(y=0; y<mapa.altura; ++y)
 			for(x=0; x<mapa.largura; ++x)
 				if (explorado[y][x]==-1)
 				{
 					explorado[y][x]=0;
 					if(!mesmoPixel(mapa.matriz[y][x], mapa.matriz[0][0]))
-						goto sai_do_loop; /* Uma das poucas aplicações legitimas de GOTO. Outras: http://stackoverflow.com/questions/245742/examples-of-good-gotos-in-c-or-c */
+						goto sai_do_loop; //One of a fill good example of using goto (when necessary)
 				}
 		sai_do_loop:
 		
@@ -62,7 +66,7 @@ int main(int argc, char *argv[])
 				y = pop(pilha_y);
 				explorado[y][x]=contagem;
 				
-				/* Adiciona pixels adjacentes as Stacks. Do jeito bruto. */
+				//Add pixels that are around the one to the stack
 				if(y==0)
 				{
 					if (x==0)
@@ -127,10 +131,10 @@ int main(int argc, char *argv[])
 		}
 	}while(y<mapa.altura && x<mapa.largura);
 	
-	/* Termina */
+	//Finish
 	
 	#ifdef IMPRIME
-	/* Usar a flag "-D IMPRIME" no GCC para incluir essa parte. */
+	//If use flag "--imprime", it will call it
 	long display_y, display_x;
 	for(display_y=0; display_y<mapa.altura; ++display_y)
 	{
@@ -147,7 +151,7 @@ int main(int argc, char *argv[])
 	return 0; 
 }
 
-/* Pra economizar espaço. */
+//To save some space
 void macro(tBitmap area, long ***visitado, numStack Y, numStack X, long y, long x)
 {
 	if(!mesmoPixel(area.matriz[y][x], area.matriz[0][0]) && ((*visitado)[y][x] == 0 || (*visitado)[y][x]==-1))

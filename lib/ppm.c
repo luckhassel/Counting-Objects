@@ -1,24 +1,18 @@
-/** Pré Compilador **/
 #include <stdio.h>
 #include <string.h>
 #include "ppm.h"
 
-/** Definição das funções de PPM **/
-
-/** Definição de funções **/
-/** Acessa um arquivo salvo e carrega na memória como um tBitmap **/
+//Access a bitmap file and saves it
 void arquivo_pra_bitmap(char diretorio[], tBitmap *area)
 {
-	/* Inicializa */
 	char *buffer, *token /*, *a, *b */;
 	long i,j, N;
 	FILE * arquivo;
 	
-	/* Carrega o arquivo como um Buffer */
 	arquivo = fopen(diretorio, "rb");
 	if (arquivo == NULL)
 	{
-		printf("Erro: O arquivo \"%s\" não pode ser encontrado.\n", diretorio);
+		printf("Erro: O arquivo \"%s\" nï¿½o pode ser encontrado.\n", diretorio);
 		exit(1);
 	}
 	
@@ -28,7 +22,7 @@ void arquivo_pra_bitmap(char diretorio[], tBitmap *area)
 	buffer = malloc((N+1)*sizeof(char));
 	if(buffer==NULL)
 	{
-		printf("Erro: o sistema não tem mais espaço disponivel.\n");
+		printf("Erro: o sistema nï¿½o tem mais espaï¿½o disponivel.\n");
 		exit(1);
 	}
 	
@@ -38,12 +32,12 @@ void arquivo_pra_bitmap(char diretorio[], tBitmap *area)
 	
 	
 	
-	/* Le o cabeçalho e testa as informações */
+	//Check the header
 	token = strtok(buffer, " \t\n\r\v\f");
 	
 	if(strcmp(token, "P6"))
 	{
-		printf("Erro: O arquivo não está no formato PPM.\n");
+		printf("Erro: O arquivo nï¿½o estï¿½ no formato PPM.\n");
 		exit(1);
 	}
 	
@@ -52,16 +46,16 @@ void arquivo_pra_bitmap(char diretorio[], tBitmap *area)
 	token=strtok(NULL, " \t\n\r\v\f");
 	area->altura=atoi(token);
 	
-	token=strtok(NULL, " \t\n\r\v\f"); /* O exercicio especifica que aqui o valor sempre será 255 */
+	token=strtok(NULL, " \t\n\r\v\f");
 	
-	while(*token++!='\0') /* STRTOK pode ter dificuldades em pegar o resto do código, que pode incluir \0's por ser binario, por isso uso essa linha aqui */
+	while(*token++!='\0')
 		;
 	
-	/* Carrega os valores na matriz */
+	//Load values into the matrix
 	area->matriz=malloc(area->altura*sizeof(*area->matriz));
 	if (area->matriz==NULL)
 	{
-		printf("Erro: Não há mais memória disponivel.\n");
+		printf("Erro: Nï¿½o hï¿½ mais memï¿½ria disponivel.\n");
 		exit(1);
 	}
 	for(i=0; i<area->altura; ++i)
@@ -69,7 +63,7 @@ void arquivo_pra_bitmap(char diretorio[], tBitmap *area)
 		area->matriz[i]=malloc(area->largura*sizeof(**area->matriz));
 		if (area->matriz[i]==NULL)
 		{
-			printf("Erro: Não há mais memória disponivel.\n");
+			printf("Erro: Nï¿½o hï¿½ mais memï¿½ria disponivel.\n");
 			exit(1);
 		}
 	}

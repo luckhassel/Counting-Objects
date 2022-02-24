@@ -1,22 +1,20 @@
-/** Instruções pro Compilador **/
 #include <stdio.h>
 #include "stacks.h"
 
-/** Definição das Funções de Stack **/
-
+//Definition of the struct
 struct s_numStack ** newStack(void)
 {
 	return calloc(1, sizeof(struct s_numStack *));
 }
 
-/* Empurra um valor na Stack */
+//Push a value to the stack
 void push(struct s_numStack **topo, long valor)
 {
 	struct s_numStack * novoTopo;
 	novoTopo=malloc(sizeof *novoTopo);
 	if (!novoTopo)
 	{
-		fprintf(stderr, "ERRO: falha de malloc() ao executar a operação PUSH.\n");
+		fprintf(stderr, "ERRO: falha de malloc() ao executar a operaï¿½ï¿½o PUSH.\n");
 		return;
 	}
 	novoTopo->elemento=valor;
@@ -29,7 +27,7 @@ void push(struct s_numStack **topo, long valor)
 	*topo=novoTopo;
 }
 
-/* Puxa um valor da Stack. */
+//Pull a value from the stack
 long pop(struct s_numStack **pilha)
 {
 	struct s_numStack * topo;
@@ -49,13 +47,13 @@ long pop(struct s_numStack **pilha)
 	return devolver;
 }
 
-/* Retorna o elemento do topo da pilha sem tirar ele do lugar. */
+//Return the first element of the struct
 long peek(struct s_numStack **pilha)
 {
 	return (*pilha)->elemento;
 }
 
-/* Checa se uma pilha está vazia */
+//Check if stack is empty
 int isEmpty(struct s_numStack **pilha)
 {
 	if (*pilha==NULL)
